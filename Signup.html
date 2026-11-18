@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResQ Connect - Signup</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-image: url("Rescue Watch Over the Sunset Valley.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .box {
+            width: 100%;
+            max-width: 420px;
+            padding: 36px 35px;
+            background: rgba(7, 30, 58, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+
+        .box h2 {
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #cbd5e1;
+            font-size: 14px;
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #e2e8f0;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 11px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .input-group input::placeholder {
+            color: #94a3b8;
+        }
+
+        .input-group input:focus {
+            border-color: #ef4444;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 13px;
+            margin-top: 8px;
+            background-color: #e11d48;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .signup-btn:hover {
+            background-color: #be123c;
+        }
+
+        .signup-btn:active {
+            transform: scale(0.98);
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            margin: 22px 0;
+        }
+
+        .login-text {
+            text-align: center;
+            font-size: 14px;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        .login-text a {
+            color: #f87171;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>Create your account</h2>
+        <p class="subtitle">Locate - Connect - Save</p>
+
+        <form id="signupForm">
+            <div class="input-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="mobile">Mobile No</label>
+                <input type="tel" id="mobile" placeholder="Enter your Phone no." required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Set Password</label>
+                <input type="password" id="password" placeholder="Set your password (8–15 chars)" minlength="8" maxlength="15" required>
+            </div>
+
+            <button type="submit" class="signup-btn">Signup</button>
+
+            <hr>
+
+            <p class="login-text">
+                Already have an account? <a href="Login.html">Login</a>
+            </p>
+        </form>
+    </div>
+
+    <script src="connect.js"></script>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim().toLowerCase();
+            let mobile = document.getElementById("mobile").value.trim();
+            let password = document.getElementById("password").value;
+
+            if (password.length < 8 || password.length > 15) {
+                alert("Password must be between 8 and 15 characters.");
+                return;
+            }
+
+            let pendingSignup = {
+                name: name,
+                email: email,
+                mobile: mobile,
+                password: password
+            };
+
+            sessionStorage.setItem(
+                "pendingSignup",
+                JSON.stringify(pendingSignup)
+            );
+
+            window.location.href = "role.html";
+        });
+    </script>
+
+</body>
+</html>

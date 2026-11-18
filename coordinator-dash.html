@@ -1,0 +1,709 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinator Dashboard | ResQ Connect</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f6fa;
+            color: #1f8ec1;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            background: #142e49;
+            color: white;
+            position: fixed;
+            padding: 25px 18px;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .tagline {
+            color: #b8c9d9;
+            font-size: 11px;
+            margin-bottom: 45px;
+        }
+
+        .sidebar h4 {
+            color: #91a8bf;
+            font-size: 11px;
+            margin: 25px 10px 12px;
+            letter-spacing: 1px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #e1eaf2;
+            text-decoration: none;
+            padding: 13px 12px;
+            border-radius: 7px;
+            margin-bottom: 7px;
+            font-size: 14px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #294c70;
+            color: white;
+        }
+
+        /* MAIN CONTENT */
+
+        .main {
+            margin-left: 240px;
+            padding: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar p {
+            color: #788797;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .profile {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 9px;
+            box-shadow: 0 2px 8px #0000000d;
+        }
+
+        /* WELCOME */
+
+        .welcome {
+            background: linear-gradient(120deg, #173c5d, #28658b);
+            color: white;
+            padding: 28px;
+            border-radius: 13px;
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            margin-bottom: 9px;
+        }
+
+        .welcome p {
+            color: #dceaf5;
+            font-size: 14px;
+        }
+
+        /* STATISTICS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 11px;
+            box-shadow: 0 3px 12px #00000009;
+            border-left: 4px solid #367da9;
+        }
+
+        .stat-card h2 {
+            font-size: 29px;
+            margin: 10px 0;
+        }
+
+        .stat-card p {
+            color: #758395;
+            font-size: 13px;
+        }
+
+        .urgent {
+            border-left-color: #dc3545;
+        }
+
+        .resolved {
+            border-left-color: #269b69;
+        }
+
+        .active {
+            border-left-color: #e6a23c;
+        }
+
+        /* SECTIONS */
+
+        .section {
+            background: white;
+            padding: 23px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 12px #00000009;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 12px;
+        }
+
+        .section-heading h3 {
+            font-size: 18px;
+        }
+
+        /* SEARCH */
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        input, select {
+            padding: 10px;
+            border: 1px solid #d7e0e8;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        input {
+            min-width: 180px;
+        }
+
+        /* TABLE */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th {
+            text-align: left;
+            color: #758395;
+            font-size: 12px;
+            background: #f6f8fb;
+            padding: 14px 10px;
+        }
+
+        td {
+            padding: 16px 10px;
+            border-bottom: 1px solid #edf0f4;
+            font-size: 13px;
+        }
+
+        .status {
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .searching {
+            background: #fff0d9;
+            color: #a66b0b;
+        }
+
+        .assigned {
+            background: #e2efff;
+            color: #2868a8;
+        }
+
+        .completed {
+            background: #def5e9;
+            color: #238052;
+        }
+
+        .high {
+            color: #d52f40;
+            font-weight: bold;
+        }
+
+        .medium {
+            color: #c58a24;
+            font-weight: bold;
+        }
+
+        .low {
+            color: #238052;
+            font-weight: bold;
+        }
+
+        /* BUTTONS */
+
+        button {
+            border: none;
+            padding: 9px 13px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .view-btn {
+            background: #e8f1fa;
+            color: #245a84;
+        }
+
+        .assign-btn {
+            background: #1d557e;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.82;
+        }
+
+        /* RESCUE TEAMS */
+
+        .teams {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .team-card {
+            border: 1px solid #e6ebf0;
+            padding: 18px;
+            border-radius: 10px;
+        }
+
+        .team-card h4 {
+            margin-bottom: 10px;
+        }
+
+        .team-card p {
+            color: #788797;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .available {
+            color: #238052;
+            font-weight: bold;
+        }
+
+        .on-mission {
+            color: #c58a24;
+            font-weight: bold;
+        }
+
+        /* ACTIVITY */
+
+        .activity {
+            padding: 13px 0;
+            border-bottom: 1px solid #edf0f4;
+            font-size: 13px;
+        }
+
+        .activity small {
+            display: block;
+            color: #8794a3;
+            margin-top: 5px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .teams {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+            }
+
+            .sidebar .tagline,
+            .sidebar h4 {
+                display: none;
+            }
+
+            .sidebar a {
+                display: inline-block;
+                padding: 9px;
+                font-size: 12px;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 16px;
+            }
+
+            .stats,
+            .teams {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                gap: 12px;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">🆘 ResQ Connect</div>
+        <div class="tagline">LOCATE • CONNECT • SAVE</div>
+
+        <h4>MAIN MENU</h4>
+
+        <a href="#" class="active">▦ Dashboard</a>
+        <a href="#cases">▤ All Cases</a>
+        <a href="#teams">🚑 Rescue Teams</a>
+        <a href="#activity">◷ Recent Activity</a>
+
+        <h4>ACCOUNT</h4>
+
+        <a href="index.html">⌂ Home</a>
+        <a href="Login.html">↪ Logout</a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h2>Coordinator Dashboard</h2>
+                <p>Manage emergencies and coordinate rescue operations.</p>
+            </div>
+
+            <div class="profile">
+                👤 Coordinator
+            </div>
+
+        </div>
+
+
+        <!-- WELCOME -->
+
+        <section class="welcome">
+
+            <h2>Welcome, Coordinator! 👋</h2>
+
+            <p>
+                Here's an overview of the rescue activities
+                and emergency reports.
+            </p>
+
+        </section>
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+                <p>Total Cases</p>
+                <h2 id="totalCases">4</h2>
+                <p>All reported cases</p>
+            </div>
+
+            <div class="stat-card active">
+                <p>Active Cases</p>
+                <h2 id="activeCases">2</h2>
+                <p>Currently in progress</p>
+            </div>
+
+            <div class="stat-card resolved">
+                <p>Resolved Cases</p>
+                <h2 id="resolvedCases">1</h2>
+                <p>Successfully completed</p>
+            </div>
+
+            <div class="stat-card urgent">
+                <p>Urgent Cases</p>
+                <h2 id="urgentCases">1</h2>
+                <p>Require immediate attention</p>
+            </div>
+
+        </section>
+
+
+        <!-- CASE MANAGEMENT -->
+
+        <section class="section" id="cases">
+
+            <div class="section-heading">
+
+                <h3>Emergency Cases</h3>
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search case or location..."
+                    >
+
+                    <select id="statusFilter">
+                        <option value="all">All Status</option>
+                        <option value="Searching">Searching</option>
+                        <option value="Assigned">Assigned</option>
+                        <option value="Resolved">Resolved</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Case ID</th>
+                            <th>Case Type</th>
+                            <th>Location</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="caseTable">
+
+                        <tr data-status="Searching">
+                            <td>SR001</td>
+                            <td>Missing Person</td>
+                            <td>Ludhiana</td>
+                            <td class="high">High</td>
+                            <td><span class="status searching">Searching</span></td>
+                            <td><button class="assign-btn" onclick="assignTeam('SR001')">Assign</button></td>
+                        </tr>
+
+                        <tr data-status="Assigned">
+                            <td>SR002</td>
+                            <td>Emergency</td>
+                            <td>Khanna</td>
+                            <td class="medium">Medium</td>
+                            <td><span class="status assigned">Assigned</span></td>
+                            <td><button class="view-btn" onclick="viewCase('SR002')">View</button></td>
+                        </tr>
+
+                        <tr data-status="Resolved">
+                            <td>SR003</td>
+                            <td>Missing Person</td>
+                            <td>Jagraon</td>
+                            <td class="low">Low</td>
+                            <td><span class="status completed">Resolved</span></td>
+                            <td><button class="view-btn" onclick="viewCase('SR003')">View</button></td>
+                        </tr>
+
+                        <tr data-status="Searching">
+                            <td>SR004</td>
+                            <td>Medical Emergency</td>
+                            <td>Jalandhar</td>
+                            <td class="high">High</td>
+                            <td><span class="status searching">Searching</span></td>
+                            <td><button class="assign-btn" onclick="assignTeam('SR004')">Assign</button></td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESCUE TEAMS -->
+
+        <section class="section" id="teams">
+
+            <div class="section-heading">
+                <h3>Rescue Team Availability</h3>
+            </div>
+
+            <div class="teams">
+
+                <div class="team-card">
+                    <h4>🚑 Team Alpha</h4>
+                    <p>Status: <span class="available">Available</span></p>
+                    <p>Members: 5</p>
+                    <button class="assign-btn"
+                        onclick="assignRescue('Team Alpha')">
+                        Assign Case
+                    </button>
+                </div>
+
+                <div class="team-card">
+                    <h4>🚑 Team Bravo</h4>
+                    <p>Status: <span class="on-mission">On Mission</span></p>
+                    <p>Members: 4</p>
+                    <button class="view-btn"
+                        onclick="alert('Team Bravo is currently on a mission.')">
+                        View Details
+                    </button>
+                </div>
+
+                <div class="team-card">
+                    <h4>🚑 Team Charlie</h4>
+                    <p>Status: <span class="available">Available</span></p>
+                    <p>Members: 6</p>
+                    <button class="assign-btn"
+                        onclick="assignRescue('Team Charlie')">
+                        Assign Case
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECENT ACTIVITY -->
+
+        <section class="section" id="activity">
+
+            <div class="section-heading">
+                <h3>Recent Activity</h3>
+            </div>
+
+            <div class="activity">
+                🔴 New emergency report received — SR004
+                <small>Recently reported</small>
+            </div>
+
+            <div class="activity">
+                🚑 Team Bravo assigned to SR002
+                <small>Sample activity</small>
+            </div>
+
+            <div class="activity">
+                ✅ Case SR003 marked as resolved
+                <small>Sample activity</small>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // Search cases
+
+        const searchInput = document.getElementById("searchInput");
+        const statusFilter = document.getElementById("statusFilter");
+
+        function filterCases() {
+
+            let searchText = searchInput.value.toLowerCase();
+            let selectedStatus = statusFilter.value;
+
+            let rows = document.querySelectorAll("#caseTable tr");
+
+            rows.forEach(function(row) {
+
+                let rowText = row.innerText.toLowerCase();
+                let rowStatus = row.getAttribute("data-status");
+
+                let matchesSearch = rowText.includes(searchText);
+
+                let matchesStatus =
+                    selectedStatus === "all" ||
+                    rowStatus === selectedStatus;
+
+                row.style.display =
+                    matchesSearch && matchesStatus ? "" : "none";
+
+            });
+        }
+
+        searchInput.addEventListener("input", filterCases);
+        statusFilter.addEventListener("change", filterCases);
+
+
+        // Assign a rescue team
+
+        function assignTeam(caseId) {
+
+            let team = prompt(
+                "Enter the rescue team name for " + caseId +
+                " (Team Alpha or Team Charlie):"
+            );
+
+            if (team) {
+                alert(caseId + " assigned to " + team);
+            }
+
+        }
+
+
+        // Assign rescue team
+
+        function assignRescue(teamName) {
+
+            let caseId = prompt("Enter the Case ID to assign to " + teamName);
+
+            if (caseId) {
+                alert(teamName + " selected for case " + caseId);
+            }
+
+        }
+
+
+        // View case details
+
+        function viewCase(caseId) {
+
+            alert("Viewing details of " + caseId);
+
+        }
+
+    </script>
+<script src="connect.js"></script>
+
+<script>
+    checkLogin("coordinator");
+</script>
+</body>
+</html>
